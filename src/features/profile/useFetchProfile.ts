@@ -8,7 +8,8 @@ type UserProfile = {
     name: string;
     email: string
     profileImage: string;
-    role: string
+    role: string;
+    phone: string;
     Merchant: {
         storeName: string
     }

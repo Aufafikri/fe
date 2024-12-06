@@ -28,6 +28,7 @@ import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Image from "next/image";
 import HandleAddPhoneNumber from "@/components/Accounts/HandleAddPhoneNumber";
+import HandleDeletePhoneNumber from "@/components/Accounts/HandleDeletePhoneNumber";
 
 const DEFAULT_PROFILE_IMAGE =
   "https://www.its.ac.id/it/wp-content/uploads/sites/46/2021/06/blank-profile-picture-973460_1280.png";
@@ -136,7 +137,21 @@ const SettingsAccount = () => {
           <h1 className="font-semibold mt-3">Email Address</h1>
           <p className="mt-2"> {profileSettings?.email} </p>
           <hr className="mt-6" />
-          <HandleAddPhoneNumber />
+          <h1 className="mt-3 font-semibold">Phone Number</h1>
+          <div className="flex justify-between items-center">
+          {!profileSettings?.phone || profileSettings.phone === "" ? (
+  <div>
+    <p className="text-gray-500 mt-2">
+      No phone number added. Please add your phone number.
+    </p>
+    <HandleAddPhoneNumber />
+  </div>
+) : (
+  <p className="mt-2">{profileSettings.phone}</p>
+)}
+<HandleDeletePhoneNumber />
+          </div>
+          {/* <HandleAddPhoneNumber /> */}
           <hr className="mt-6" />
           {profileSettings?.role !== "ADMIN" && (
             <>

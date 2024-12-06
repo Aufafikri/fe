@@ -24,10 +24,11 @@ const HandleAddPhoneNumber = () => {
   type AddPhoneNumber = z.infer<typeof phoneNumberSchema>
 
   const form = useForm<AddPhoneNumber>({
-    resolver: zodResolver(phoneNumberSchema)
+    resolver: zodResolver(phoneNumberSchema),
+
   })
 
-  const { control, handleSubmit } = form
+  const { control, handleSubmit, setError } = form
 
   const onSubmit = handleSubmit((values) => {
     const phoneNumber = Number(values.phoneNumber); // Convert to number
@@ -43,14 +44,19 @@ const HandleAddPhoneNumber = () => {
       onSuccess: () => {
         toast.success("success add phone number!")
         window.location.reload()
-      }
+      },
+      onError: (error: any) => {
+        setError("phoneNumber", {
+          type: "manual",
+          message: error.response?.data?.message || "try with 62",
+        });
+      },
     })
   })
 
   return (
     <>
-      <h1 className="mt-3 font-semibold">Phone Number</h1>
-      <button className="border mt-2 p-1" onClick={() => setIsModalOpen(true)}>
+      <button className="border mt-2 p-2 font-semibold rounded-lg bg-blue-700 hover:bg-blue-600 text-white" onClick={() => setIsModalOpen(true)}>
         add phone number
       </button>
       <AnimatePresence>
@@ -97,7 +103,7 @@ const HandleAddPhoneNumber = () => {
                         )
                       }}
                       />
-                      <button type="submit" className="flex ml-auto bg-gray-900 p-2 mt-4">Add Phone Number</button>
+                      <button type="submit" className="flex ml-auto dark:bg-gray-900 border p-2 mt-4 bg-blue-700 hover:bg-blue-600 rounded-lg text-white">Add Phone</button>
                     </form>
                   </Form>
               </div>
